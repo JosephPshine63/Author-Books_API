@@ -1,0 +1,26 @@
+version: "3.8" # Specify your desired Docker Compose version
+
+services:
+  # Spring Boot application service
+  app:
+    build: . # Build from the current directory (Dockerfile)
+    ports:
+      - "8080:8080" # Map container port 8080 to host port 8080
+    environment:
+      # Environment variables for Spring Boot application
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/author-books-api
+      SPRING_DATASOURCE_USERNAME: dev.pioruocco
+      SPRING_DATASOURCE_PASSWORD: Cambiami123
+
+  # MySQL database service
+  db:
+    image: mysql:8.0 # Replace with your desired MySQL version
+    environment:
+      MYSQL_ROOT_PASSWORD: Cambiami123
+      MYSQL_DATABASE: author-books-api # Same database name as in the app service
+    volumes:
+      - mysql-data:/var/lib/mysql # Persist data volume for the database
+
+volumes:
+  # Volume to persist MySQL data
+  mysql-data: {}
